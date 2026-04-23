@@ -45,7 +45,7 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(username, password));
         if(auth!= null && auth.isAuthenticated()){
             User user = userService.getUserByUsername(username);
-            String token = jwtUtil.createToken(user.getUsername(),user.getPassword(),user.getId());
+            String token = jwtUtil.createToken(user.getUsername(), "ROLE_" + user.getRole(),user.getId());
             Cookie cookie = new Cookie("jwt", token);
              cookie.setHttpOnly(true);
             cookie.setPath("/");

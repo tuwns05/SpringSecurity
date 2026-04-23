@@ -11,10 +11,9 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.demo.socialmedia.security,com.demo.socialmedia.dao" />
+    <context:component-scan base-package="com.demo.socialmedia" />
 
     <security:http pattern="/static/**" security="none"/>
-
 
     <security:http use-expressions="true" create-session="stateless"
                    entry-point-ref="unauthorizedEntryPoint">
@@ -29,20 +28,23 @@
         <security:csrf disabled="true"/>
     </security:http>
 
-    <!-- Entry point trả về 401 (hoặc redirect) -->
+    <!-- Entry point redirect về login -->
     <bean id="unauthorizedEntryPoint"
-          class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
+          class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <constructor-arg value="/login" />
+    </bean>
 
     <bean id="jwtFilter" class="com.demo.socialmedia.security.JwtFilter"/>
     <bean id="jwtUtil" class="com.demo.socialmedia.util.JwtUtil"/>
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
     <bean id="CustomUserDetailsService" class="com.demo.socialmedia.security.CustomUserDetailsService"/>
 
+
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${DB_DRIVER:com.mysql.cj.jdbc.Driver}" />
-        <property name="url" value="${DB_URL:jdbc:mysql://localhost:3306/social_media_db?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true}" />
-        <property name="username" value="${DB_USERNAME:root}" />
-        <property name="password" value="${DB_PASSWORD:}" />
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/social_media_db?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true" />
+        <property name="username" value="root" />
+        <property name="password" value="" />
     </bean>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
