@@ -1,0 +1,20 @@
+target/
+tmp/
+scripts/__pycache__/
+docs/**/node_modules/
+docs/**/build/
+docs/**/rendered/
+docs/**/pptx-unpacked/
+docs/**/extracted-media/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
